@@ -9,7 +9,6 @@ namespace NeonRacer
         Square,
     }
 
-
     public class Piece
     {
         public Shape shape;

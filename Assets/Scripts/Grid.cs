@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ICSharpCode.NRefactory.Ast;
 using UnityEngine;
 
 namespace NeonRacer
@@ -8,7 +9,7 @@ namespace NeonRacer
     {
         public Piece[] grid;
 
-        public void initGrid()
+        public void InitGrid()
         {
             grid = new[]
             {
@@ -18,11 +19,32 @@ namespace NeonRacer
             };
         }
 
-        public void movePiece(int index, Direction direction)
+        public void MovePiece(Direction direction)
         {
-            if (index < 0 || index >= grid.Length || grid[index] == null)
+            var nullIndex = 0;
+            for (var i = 0; i < grid.Length; i++)
+                if (grid[i] == null)
+                {
+                    nullIndex = i;
+                    break;
+                }
+
+            var index = DirectionToIndex(nullIndex, OppositesDirection(direction));
+            if (nullIndex == index)
                 return;
-            SwitchPieces(grid, index, DirectionToIndex(index, direction));
+            SwitchPieces(grid, index, nullIndex);
+        }
+
+        private static Direction OppositesDirection(Direction direction)
+        {
+            var dict = new Dictionary<Direction, Direction>
+            {
+                {Direction.down, Direction.up},
+                {Direction.up, Direction.down},
+                {Direction.left, Direction.right},
+                {Direction.right, Direction.left},
+            };
+            return dict[direction];
         }
 
         public static int DirectionToIndex(int index, Direction direction)

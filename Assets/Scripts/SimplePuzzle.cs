@@ -16,19 +16,29 @@ namespace NeonRacer
     public class SimplePuzzle : MonoBehaviour
     {
         [SerializeField] private Grid grid;
+        [SerializeField] private Input input;
+
         [SerializeField] private PieceSetup[] setup = new PieceSetup[0];
         private Dictionary<Shape, GameObject> _prefabs = new Dictionary<Shape, GameObject>();
 
         private void Reset()
         {
             grid = GetComponent<Grid>();
+            input = GetComponent<Input>();
         }
 
         public void Start()
         {
             foreach (var piece in setup)
                 _prefabs.Add(piece.shape, piece.gameObject);
-            grid.initGrid();
+            grid.InitGrid();
+            RenderGrid();
+        }
+
+        private void RenderGrid()
+        {
+            foreach (Transform child in transform)
+                Destroy(child.gameObject);
             for (var i = 0; i < grid.grid.Length; i++)
             {
                 var piece = grid.grid[i];
@@ -41,6 +51,16 @@ namespace NeonRacer
                         transform)
                     .GetComponent<SpriteRenderer>()
                     .color = piece.color;
+            }
+        }
+
+        private void Update()
+        {
+            if (input.commands.Count > 0)
+            {
+                var direction = input.directions[input.commands.Dequeue()];
+                grid.MovePiece(direction);
+                RenderGrid();
             }
         }
     }
