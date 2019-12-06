@@ -500,7 +500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377d2b02ff9f48ef9faeb777e1851ef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
 --- !u!1 &1049066528
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +511,7 @@ GameObject:
   - component: {fileID: 1049066530}
   - component: {fileID: 1049066529}
   - component: {fileID: 1049066531}
+  - component: {fileID: 1049066532}
   m_Layer: 0
   m_Name: Puzzle
   m_TagString: Untagged
@@ -533,6 +533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 1049066531}
   input: {fileID: 692795281}
+  movePiece: {fileID: 1049066532}
   setup:
   - shape: 0
     gameObject: {fileID: 6477688838556219406, guid: 8c365b72e52b6cc45a00f167caf7e27e,
@@ -567,6 +568,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51132a93fa03dc246ac64f436931875d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1049066532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049066528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669b8e07584a40bf83a98e57da59e598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1580696126

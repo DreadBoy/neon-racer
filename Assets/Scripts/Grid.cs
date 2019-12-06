@@ -19,7 +19,7 @@ namespace NeonRacer
             };
         }
 
-        public void MovePiece(Direction direction)
+        public int[] GetIndexesForMove(Direction direction)
         {
             var nullIndex = 0;
             for (var i = 0; i < grid.Length; i++)
@@ -30,9 +30,16 @@ namespace NeonRacer
                 }
 
             var index = DirectionToIndex(nullIndex, OppositesDirection(direction));
-            if (nullIndex == index)
-                return;
-            SwitchPieces(grid, index, nullIndex);
+            return new[] {index, nullIndex};
+        }
+
+        public int[] MovePiece(Direction direction)
+        {
+            var indexes = GetIndexesForMove(direction);
+            if (indexes[0] == indexes[1])
+                return indexes;
+            SwitchPieces(grid, indexes[0], indexes[1]);
+            return indexes;
         }
 
         private static Direction OppositesDirection(Direction direction)

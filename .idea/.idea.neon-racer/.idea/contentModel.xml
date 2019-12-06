@@ -12,6 +12,7 @@
           <e p="Enums.cs" t="Include" />
           <e p="Grid.cs" t="Include" />
           <e p="Input.cs" t="Include" />
+          <e p="MovePiece.cs" t="Include" />
           <e p="NeonRacer.asmdef" t="Include" />
           <e p="SimpleCameraController.cs" t="Include" />
           <e p="SimplePuzzle.cs" t="Include" />

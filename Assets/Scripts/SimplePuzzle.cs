@@ -13,10 +13,12 @@ namespace NeonRacer
     }
 
     [RequireComponent(typeof(Grid))]
+    [RequireComponent(typeof(MovePiece))]
     public class SimplePuzzle : MonoBehaviour
     {
         [SerializeField] private Grid grid;
         [SerializeField] private Input input;
+        [SerializeField] private MovePiece movePiece;
 
         [SerializeField] private PieceSetup[] setup = new PieceSetup[0];
         private Dictionary<Shape, GameObject> _prefabs = new Dictionary<Shape, GameObject>();
@@ -25,6 +27,7 @@ namespace NeonRacer
         {
             grid = GetComponent<Grid>();
             input = GetComponent<Input>();
+            movePiece = GetComponent<MovePiece>();
         }
 
         public void Start()
@@ -32,26 +35,27 @@ namespace NeonRacer
             foreach (var piece in setup)
                 _prefabs.Add(piece.shape, piece.gameObject);
             grid.InitGrid();
-            RenderGrid();
-        }
-
-        private void RenderGrid()
-        {
-            foreach (Transform child in transform)
-                Destroy(child.gameObject);
+            var gos = new GameObject[9];
             for (var i = 0; i < grid.grid.Length; i++)
             {
                 var piece = grid.grid[i];
                 if (piece == null)
                     continue;
-                var position = new Vector3(i % 3, Mathf.Ceil(i / -3f));
-                Instantiate(_prefabs[piece.shape],
-                        position,
-                        Quaternion.identity,
-                        transform)
-                    .GetComponent<SpriteRenderer>()
+                var go = Instantiate(_prefabs[piece.shape],
+                    NeonRacer.MovePiece.PositionForPiece(i),
+                    Quaternion.identity,
+                    transform);
+                go.GetComponent<SpriteRenderer>()
                     .color = piece.color;
+                gos[i] = go;
+                movePiece.Init(gos);
             }
+        }
+
+        private void MovePiece(int[] indexes)
+        {
+            movePiece.Move(indexes);
+            // SmoothDamp
         }
 
         private void Update()
@@ -59,8 +63,9 @@ namespace NeonRacer
             if (input.commands.Count > 0)
             {
                 var direction = input.directions[input.commands.Dequeue()];
-                grid.MovePiece(direction);
-                RenderGrid();
+                var indexes = grid.MovePiece(direction);
+                if (indexes[0] != indexes[1])
+                    MovePiece(indexes);
             }
         }
     }
