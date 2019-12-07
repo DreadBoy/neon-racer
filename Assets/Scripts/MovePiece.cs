@@ -16,7 +16,7 @@ namespace NeonRacer
 
         public void Move(int[] indexes, int w, int h)
         {
-            GetComponent<AudioSource>().PlayOneShot(clip);
+            FindObjectOfType<GameOver>().Play(clip);
             StartCoroutine(MoveC(objects[indexes[0]], PositionForPiece(indexes[0], w, h),
                 PositionForPiece(indexes[1], w, h)));
             objects[indexes[1]] = objects[indexes[0]];

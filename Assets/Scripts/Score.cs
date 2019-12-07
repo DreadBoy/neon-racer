@@ -8,6 +8,7 @@ namespace NeonRacer
     {
         public int score = 0;
         [SerializeField] private Text text;
+        [SerializeField] private Ship ship;
         private int prevScore;
         private static readonly int Pop = Animator.StringToHash("Pop");
 
@@ -16,10 +17,15 @@ namespace NeonRacer
             text = GetComponent<Text>();
         }
 
+        private void Start()
+        {
+            ship = FindObjectOfType<Ship>();
+        }
+
         private void Update()
         {
-            text.text = score.ToString();
-            if(prevScore != score)
+            text.text = ship.speed > 0 || score > 0 ? score.ToString() : "";
+            if (prevScore != score)
                 GetComponent<Animator>().SetTrigger(Pop);
             prevScore = score;
         }

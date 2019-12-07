@@ -17,6 +17,7 @@
           <e p="Command.cs" t="Include" />
           <e p="ConfirmPuzzle.cs" t="Include" />
           <e p="Enums.cs" t="Include" />
+          <e p="GameOver.cs" t="Include" />
           <e p="Grid.cs" t="Include" />
           <e p="Input.cs" t="Include" />
           <e p="MovePiece.cs" t="Include" />
@@ -29,6 +30,8 @@
           <e p="Ship.cs" t="Include" />
           <e p="SimpleCameraController.cs" t="Include" />
           <e p="SimplePuzzle.cs" t="Include" />
+          <e p="StartScreen.cs" t="Include" />
+          <e p="Track.cs" t="Include" />
         </e>
         <e p="StarSparrow" t="Include">
           <e p="Readme" t="Include">

@@ -9,7 +9,8 @@ namespace NeonRacer
             var ship = other.GetComponent<Ship>();
             if (!ship)
                 return;
-            Debug.Log("Hit");
+            ship.speed = 0;
+            FindObjectOfType<GameOver>().Show();
         }
     }
 }

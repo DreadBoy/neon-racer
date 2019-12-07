@@ -8,11 +8,6 @@ namespace NeonRacer
     {
         public float speed;
 
-        private void Reset()
-        {
-            speed = 20;
-        }
-
         private void Update()
         {
             var trans = transform;
