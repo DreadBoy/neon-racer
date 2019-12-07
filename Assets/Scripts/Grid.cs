@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using ICSharpCode.NRefactory.Ast;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace NeonRacer
@@ -8,15 +7,21 @@ namespace NeonRacer
     public class Grid : MonoBehaviour
     {
         public Piece[] grid;
+        private int w, h;
 
-        public void InitGrid()
+        public void InitGrid(int w, int h)
         {
-            grid = new[]
+            this.w = w;
+            this.h = h;
+            grid = new int[w * h - 1].Select(i => Piece.Random()).Concat(new Piece[] {null}).ToArray();
+            // Knuth shuffle algorithm :: courtesy of Wikipedia :)
+            for (var t = 0; t < grid.Length; t++)
             {
-                Piece.Random(), Piece.Random(), Piece.Random(),
-                Piece.Random(), null, Piece.Random(),
-                Piece.Random(), Piece.Random(), Piece.Random(),
-            };
+                var r = Random.Range(t, grid.Length);
+                var tmp = grid[t];
+                grid[t] = grid[r];
+                grid[r] = tmp;
+            }
         }
 
         public int[] GetIndexesForMove(Direction direction)
@@ -54,24 +59,24 @@ namespace NeonRacer
             return dict[direction];
         }
 
-        public static int DirectionToIndex(int index, Direction direction)
+        public int DirectionToIndex(int index, Direction direction)
         {
             switch (direction)
             {
                 case Direction.up:
-                    if (index < 3)
+                    if (index < w)
                         return index;
-                    return index - 3;
+                    return index - w;
                 case Direction.right:
-                    if (index % 3 == 2)
+                    if (index % w == w - 1)
                         return index;
                     return index + 1;
                 case Direction.down:
-                    if (index > 5)
+                    if (index > w * h - w - 1)
                         return index;
-                    return index + 3;
+                    return index + w;
                 case Direction.left:
-                    if (index % 3 == 0)
+                    if (index % w == 0)
                         return index;
                     return index - 1;
                 default:

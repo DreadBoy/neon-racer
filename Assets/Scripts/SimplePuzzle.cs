@@ -34,27 +34,27 @@ namespace NeonRacer
         {
             foreach (var piece in setup)
                 _prefabs.Add(piece.shape, piece.gameObject);
-            grid.InitGrid();
-            var gos = new GameObject[9];
+            foreach (Transform child in transform)
+                Destroy(child.gameObject);
+            grid.InitGrid(5, 3);
+            var gos = new GameObject[5 * 3];
             for (var i = 0; i < grid.grid.Length; i++)
             {
                 var piece = grid.grid[i];
                 if (piece == null)
                     continue;
                 var go = Instantiate(_prefabs[piece.shape],
-                    NeonRacer.MovePiece.PositionForPiece(i),
-                    Quaternion.identity,
-                    transform);
-                go.GetComponent<SpriteRenderer>()
-                    .color = piece.color;
+                    transform,
+                    false);
+                go.transform.localPosition = NeonRacer.MovePiece.PositionForPiece(i, 5, 3);
                 gos[i] = go;
-                movePiece.Init(gos);
             }
+            movePiece.Init(gos);
         }
 
         private void MovePiece(int[] indexes)
         {
-            movePiece.Move(indexes);
+            movePiece.Move(indexes, 5, 3);
             // SmoothDamp
         }
 
