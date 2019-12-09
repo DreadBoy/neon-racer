@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NeonRacer
 {
@@ -9,7 +8,7 @@ namespace NeonRacer
         {
             if (FindObjectsOfType<StartScreen>(true).Length > 1)
             {
-                FindObjectOfType<Ship>().speed = 20;
+                StartEffect();
                 Destroy(gameObject);
             }
             else
@@ -20,9 +19,14 @@ namespace NeonRacer
         {
             if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
             {
-                FindObjectOfType<Ship>().speed = 20;
+                StartEffect();
                 gameObject.SetActive(false);
             }
+        }
+
+        private static void StartEffect()
+        {
+            FindObjectOfType<Ship>().speed = 20;
         }
     }
 }

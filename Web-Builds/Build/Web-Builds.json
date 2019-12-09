@@ -1,0 +1,16 @@
+{
+"companyName": "Neon Racer",
+"productName": "neon-racer",
+"productVersion": "0.1",
+"dataUrl": "Web-Builds.data",
+"wasmCodeUrl": "Web-Builds.wasm",
+"wasmFrameworkUrl": "Web-Builds.framework.js",
+"graphicsAPI": ["WebGL 2.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": true,
+"multithreading": false,
+"unityVersion": "2020.1.0a15"
+}
